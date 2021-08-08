@@ -1,0 +1,31 @@
+from typing import List
+
+number_of_line = int(input())
+log_list = []
+for _ in range(number_of_line):
+    log_list.append(str(input()))
+
+def all_log_closed(log: str):
+    opened = log.count('(')
+    closed = log.count(')')
+    return opened >= closed
+
+
+def is_log_valid(count_log: int, log_list: List[str]):
+    is_first_exist = False
+    is_last_exist = False
+    count_opened = 0
+    count_closed = 0
+    for log in log_list:
+        if log[0] == "(" and all_log_closed(log=log):
+            is_first_exist = True
+        elif log[-1] == ")":
+            is_last_exist = True
+        count_closed += log.count(')')
+        count_opened += log.count('(')
+    count_not_closed = count_opened - count_closed
+    is_all_closed = count_not_closed == 0
+    is_valid = is_first_exist and is_last_exist and is_all_closed
+    return is_valid
+is_valid = is_log_valid(number_of_line, log_list)
+print(is_valid)
